@@ -76,6 +76,27 @@ HelloWorld-GitHubRelease
    ```
 
 
+
+## Lessons Learned / Lecciones Aprendidas
+
+**English**
+
+- Always ensure your solution (.sln) only references existing project files. If you move or delete a project, update the solution accordingly to avoid build errors in CI/CD.
+- The path in the publish step of your workflow must match the actual location of your .csproj file. Otherwise, the build or publish will fail.
+- Add a test step in your workflow to prevent broken releases. If tests fail, the release should not be created.
+- Keep your project structure simple and clear. Remove unused folders or files to avoid confusion and errors.
+- Use clear, bilingual commit messages and documentation if your audience is multilingual.
+
+**Español**
+
+- Asegúrate de que la solución (.sln) solo tenga referencias a proyectos que realmente existen. Si mueves o eliminas un proyecto, actualiza la solución para evitar errores de compilación en CI/CD.
+- La ruta en el paso de publicación del workflow debe coincidir con la ubicación real del archivo .csproj. Si no, fallará el build o publish.
+- Agrega un paso de pruebas en el workflow para evitar releases rotos. Si las pruebas fallan, el release no debe generarse.
+- Mantén la estructura del proyecto simple y clara. Elimina carpetas o archivos que no se usen para evitar confusiones y errores.
+- Usa mensajes de commit y documentación bilingües si tu audiencia es multilingüe.
+
+---
+
 ## How the GitHub Actions Workflow Works
 
 The workflow file is located at `.github/workflows/release.yml`. It automates the following steps:
