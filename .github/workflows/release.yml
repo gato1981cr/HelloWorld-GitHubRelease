@@ -10,23 +10,29 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # Checkout the repository code
       - name: Checkout code
         uses: actions/checkout@v2
 
+      # Setup .NET SDK
       - name: Setup .NET
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: '6.0.x'
 
+      # Restore NuGet dependencies
       - name: Restore dependencies
         run: dotnet restore ./HelloWorld-GitHubRelease.sln
 
+      # Build the solution in Release mode
       - name: Build
         run: dotnet build --configuration Release ./HelloWorld-GitHubRelease.sln
 
+      # Run unit tests (workflow will fail if tests fail)
       - name: Run tests
         run: dotnet test --no-build --configuration Release ./HelloWorld-GitHubRelease.sln
 
+      # Publish the main project to the output folder
       - name: Publish
         run: dotnet publish --configuration Release --output ./output ./HelloWorld/HelloWorld.csproj
 
@@ -35,21 +41,23 @@ jobs:
     needs: build
 
     steps:
+      # Create a new GitHub Release with auto-generated release notes
       - name: Create Release
         id: create_release
         uses: softprops/action-gh-release@v1
         with:
           tag_name: ${{ github.ref }}
           name: Release ${{ github.ref }}
+          generate_release_notes: true
           draft: false
           prerelease: false
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      # Upload published files as release assets
       - name: Upload Release Asset
         uses: softprops/action-gh-release@v1
         with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset: ./output/*
+          files: ./output/*
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

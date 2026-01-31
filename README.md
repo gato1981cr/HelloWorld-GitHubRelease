@@ -38,7 +38,22 @@ En la configuración del repositorio en GitHub, ve a `Settings > Actions > Gener
 - Familiarize yourself with basic Git commands and GitHub repository management.
 - Review the [GitHub Actions documentation](https://docs.github.com/en/actions) to understand workflow syntax and capabilities.
 
-## Project Structure
+
+## CI/CD Pipeline Diagram
+
+```mermaid
+graph TD
+   A[Push Tag] --> B[GitHub Actions Workflow]
+   B --> C[Build Solution]
+   C --> D[Run Unit Tests]
+   D -->|Tests Pass| E[Publish Artifacts]
+   E --> F[Create GitHub Release]
+   D -->|Tests Fail| G[Fail Workflow]
+```
+
+## Build Status
+
+![Build Status](https://github.com/your-username/HelloWorld-GitHubRelease/actions/workflows/release.yml/badge.svg)
 
 
 ## Project Structure
@@ -79,10 +94,70 @@ HelloWorld-GitHubRelease
    Hello, World!
    ```
 
+
 4. Run the tests:
    ```sh
    dotnet test
    ```
+
+## Code Coverage
+
+To generate a code coverage report, run:
+
+```sh
+dotnet test --collect:"XPlat Code Coverage"
+```
+
+You can use [Coverlet](https://github.com/coverlet-coverage/coverlet) and [ReportGenerator](https://github.com/danielpalme/ReportGenerator) for advanced reports.
+## Error Handling
+
+The sample project can be extended to demonstrate error handling. For example, you can add try-catch blocks in your code and write unit tests to verify error scenarios.
+
+## Versioning
+
+This project uses [Semantic Versioning (SemVer)](https://semver.org/). Tags should follow the format `vMAJOR.MINOR.PATCH` (e.g., `v1.0.0`).
+
+## GitHub Actions Workflow Permissions
+
+To allow the workflow to create releases, go to your repository's **Settings > Actions > General > Workflow permissions** and select **Read and write permissions**.  
+![Workflow Permissions Screenshot](docs/workflow-permissions.png)
+
+## References
+
+- [.NET Documentation](https://docs.microsoft.com/dotnet/)
+- [GitHub Actions Documentation](https://docs.github.com/en/actions)
+- [xUnit Documentation](https://xunit.net/)
+- [Semantic Versioning](https://semver.org/)
+
+## Project Structure Explained
+
+```
+HelloWorld-GitHubRelease/
+├── HelloWorld-GitHubRelease.sln
+├── HelloWorld/
+│   ├── HelloWorld.csproj
+│   └── Program.cs
+├── HelloWorld.Tests/
+│   ├── HelloWorld.Tests.csproj
+│   └── ProgramTests.cs
+├── .github/
+│   ├── workflows/
+│   │   └── release.yml
+│   ├── ISSUE_TEMPLATE/
+│   │   └── bug_report.md
+│   └── PULL_REQUEST_TEMPLATE.md
+├── README.md
+└── docs/
+   └── workflow-permissions.png
+```
+
+## FAQ
+
+**Q: Why does the release step fail with a 403 error?**  
+A: Make sure you have set "Read and write permissions" for workflows in your repository settings.
+
+**Q: Why does `dotnet run` not work from the root?**  
+A: Use `dotnet run --project ./HelloWorld/HelloWorld.csproj` to specify the project file.
 
 
 
