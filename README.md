@@ -1,5 +1,8 @@
 
-# Hello World GitHub Release Example
+
+# Hello World GitHub Release Example / Ejemplo de Release con GitHub Actions
+
+**English** | [Español más abajo](#instrucciones-en-español)
 
 This repository demonstrates how to automate the release process of a simple C# "Hello World" application using GitHub Actions. It is designed as an educational example to help you understand and replicate a basic CI/CD workflow for .NET projects.
 
@@ -28,14 +31,19 @@ To run, build, and experiment with this project, you will need:
 
 ## Project Structure
 
+
 ## Project Structure
 
 ```
 HelloWorld-GitHubRelease
-├── src
-│   └── HelloWorld.cs
-├── .github
-│   └── workflows
+├── HelloWorld/                # Main C# project
+│   ├── HelloWorld.csproj
+│   └── Program.cs
+├── HelloWorld.Tests/          # Unit tests (xUnit)
+│   ├── HelloWorld.Tests.csproj
+│   └── ProgramTests.cs
+├── .github/
+│   └── workflows/
 │       └── release.yml
 ├── HelloWorld-GitHubRelease.sln
 └── README.md
@@ -55,11 +63,16 @@ HelloWorld-GitHubRelease
    ```
 3. Run the application:
    ```sh
-   dotnet run --project ./src/HelloWorld.cs
+   dotnet run --project ./HelloWorld/HelloWorld.csproj
    ```
    You should see the output:
    ```
    Hello, World!
+   ```
+
+4. Run the tests:
+   ```sh
+   dotnet test
    ```
 
 
@@ -69,8 +82,63 @@ The workflow file is located at `.github/workflows/release.yml`. It automates th
 
 1. **Trigger**: The workflow runs when you push a tag that matches the pattern `v*.*.*` (e.g., `v1.0.0`).
 2. **Build**: Checks out the code, sets up the .NET environment, restores dependencies, and builds the project in Release mode.
-3. **Publish**: Publishes the compiled application to the `output` directory.
-4. **Release**: Creates a new GitHub Release and uploads the published files as release assets.
+3. **Test**: Runs all unit tests. If any test fails, the workflow stops and no release is created.
+4. **Publish**: Publishes the compiled application to the `output` directory.
+5. **Release**: Creates a new GitHub Release and uploads the published files as release assets.
+---
+
+## Instrucciones en Español
+
+Este repositorio demuestra cómo automatizar el proceso de release de una aplicación C# "Hello World" usando GitHub Actions. Es un ejemplo educativo para aprender a crear un flujo CI/CD básico para proyectos .NET.
+
+### Estructura del Proyecto
+
+```
+HelloWorld-GitHubRelease
+├── HelloWorld/                # Proyecto principal en C#
+│   ├── HelloWorld.csproj
+│   └── Program.cs
+├── HelloWorld.Tests/          # Pruebas unitarias (xUnit)
+│   ├── HelloWorld.Tests.csproj
+│   └── ProgramTests.cs
+├── .github/
+│   └── workflows/
+│       └── release.yml
+├── HelloWorld-GitHubRelease.sln
+└── README.md
+```
+
+### Cómo ejecutar la aplicación
+
+1. Clona el repositorio:
+   ```sh
+   git clone https://github.com/tu-usuario/HelloWorld-GitHubRelease.git
+   cd HelloWorld-GitHubRelease
+   ```
+2. Compila el proyecto:
+   ```sh
+   dotnet build ./HelloWorld-GitHubRelease.sln
+   ```
+3. Ejecuta la aplicación:
+   ```sh
+   dotnet run --project ./HelloWorld/HelloWorld.csproj
+   ```
+   Deberías ver:
+   ```
+   Hello, World!
+   ```
+4. Ejecuta las pruebas:
+   ```sh
+   dotnet test
+   ```
+
+### Cómo funciona el workflow de GitHub Actions
+
+1. **Disparo**: El workflow se ejecuta al hacer push de un tag tipo `v*.*.*` (ej: `v1.0.0`).
+2. **Build**: Restaura dependencias y compila en modo Release.
+3. **Test**: Ejecuta las pruebas unitarias. Si alguna falla, el workflow se detiene y no se crea el release.
+4. **Publish**: Publica la app compilada en la carpeta `output`.
+5. **Release**: Crea un Release en GitHub y sube los archivos publicados como assets.
 
 ### How to Trigger the Workflow
 

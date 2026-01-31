@@ -24,8 +24,11 @@ jobs:
       - name: Build
         run: dotnet build --configuration Release ./HelloWorld-GitHubRelease.sln
 
+      - name: Run tests
+        run: dotnet test --no-build --configuration Release ./HelloWorld-GitHubRelease.sln
+
       - name: Publish
-        run: dotnet publish --configuration Release --output ./output ./src/HelloWorld.cs
+        run: dotnet publish --configuration Release --output ./output ./HelloWorld/HelloWorld.csproj
 
   release:
     runs-on: ubuntu-latest
