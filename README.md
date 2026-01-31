@@ -13,6 +13,7 @@ This repository demonstrates how to automate the release process of a simple C# 
 - The basics of tagging releases in Git and how this triggers automated workflows.
 - Best practices for open source project automation.
 
+
 ## Prerequisites
 
 To run, build, and experiment with this project, you will need:
@@ -22,6 +23,14 @@ To run, build, and experiment with this project, you will need:
 - A **GitHub account**
 - (Recommended) **Visual Studio Code** or **Visual Studio 2022+** for easier editing and debugging
 - (Optional) **GitHub CLI** ([Download GitHub CLI](https://cli.github.com/)) for advanced repository management
+- **IMPORTANT:** In your repository, go to `Settings > Actions > General > Workflow permissions` and select **Read and write permissions**. This is required for GitHub Actions to create releases automatically.
+
+
+## Recomendación importante en español
+
+En la configuración del repositorio en GitHub, ve a `Settings > Actions > General > Workflow permissions` y selecciona **Read and write permissions**. Esto es necesario para que los workflows puedan crear releases automáticamente.
+
+---
 
 ## Recommendations
 
